@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💰 Калькулятор экономии с ИИ | NEURO-FORCE</title>
+    <meta name="description" content="Рассчитайте, сколько времени и денег сэкономит ИИ-автоматизация в вашем бизнесе. Бесплатный калькулятор ROI.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💰</text></svg>">
+    
+    <!-- Open Graph для соцсетей -->
+    <meta property="og:title" content="Калькулятор экономии с ИИ">
+    <meta property="og:description" content="Узнайте, сколько денег и времени сэкономит автоматизация в ВАШЕМ бизнесе!">
+    <meta property="og:image" content="https://via.placeholder.com/1200x630/667eea/ffffff?text=ИИ+Калькулятор">
+    <meta property="og:type" content="website">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.15);
+            overflow: hidden;
+            animation: slideUp 0.8s ease;
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            color: white;
+            padding: 50px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="40" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="80" r="1.5" fill="rgba(255,255,255,0.1)"/></svg>');
+            animation: float 20s infinite linear;
+        }
+        
+        @keyframes float {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        
+        .header h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            font-weight: 800;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .header .subtitle {
+            font-size: 1.4em;
+            opacity: 0.95;
+            position: relative;
+            z-index: 2;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .content {
+            padding: 60px 40px;
+        }
+        
+        .calculator-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: start;
+            margin-bottom: 40px;
+        }
+        
+        @media (max-width: 968px) {
+            .calculator-section {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .content {
+                padding: 40px 20px;
+            }
+            
+            .header {
+                padding: 40px 20px;
+            }
+            
+            .header h1 {
+                font-size: 2.5em;
+            }
+        }
+        
+        .input-panel {
+            background: #f8fafc;
+            padding: 40px;
+            border-radius: 20px;
+            border: 3px solid transparent;
+            background-clip: padding-box;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .input-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 20px;
+            padding: 3px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            -webkit-mask-composite: xor;
+            z-index: -1;
+        }
+        
+        .input-panel h3 {
+            color: #1e293b;
+            margin-bottom: 30px;
+            font-size: 1.6em;
+            font-weight: 700;
+            text-align: center;
+        }
+        
+        .input-group {
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 5;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: #374151;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 18px;
+            transition: all 0.3s;
+            background: white;
+            z-index: 10;
+            position: relative;
+            pointer-events: auto;
+        }
+        
+        .input-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .input-group input:hover {
+            border-color: #9ca3af;
+        }
+        
+        .input-group select {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 18px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 12px center;
+            background-repeat: no-repeat;
+            background-size: 16px;
+            z-index: 10;
+            position: relative;
+        }
+        
+        .input-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .input-group select:hover {
+            border-color: #9ca3af;
+        }
+        
+        .input-group select option {
+            padding: 10px;
+            background: white;
+            color: #374151;
+        }
+        
+        .input-group small {
+            color: #6b7280;
+            font-size: 0.9em;
+            margin-top: 5px;
+            display: block;
+        }
+        
+        .auto-info {
+            background: #e0f2fe;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 0.9em;
+            color: #0277bd;
+            margin-top: 20px;
+        }
+        
+        .results-panel {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .results-panel::before {
+            content: '💰';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            font-size: 120px;
+            opacity: 0.1;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .results-panel h3 {
+            font-size: 1.8em;
+            margin-bottom: 25px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .result-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            position: relative;
+            z-index: 2;
+            backdrop-filter: blur(10px);
+        }
+        
+        .result-label {
+            font-size: 1em;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+        
+        .result-value {
+            font-size: 1.8em;
+            font-weight: 800;
+            color: #fbbf24;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .wow-effect {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            margin: 40px 0;
+            animation: bounce 1s ease;
+            box-shadow: 0 15px 40px rgba(238, 90, 36, 0.3);
+            display: none;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+        
+        .wow-effect h4 {
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+        
+        .wow-effect .big-number {
+            font-size: 3.5em;
+            font-weight: 900;
+            margin: 15px 0;
+            text-shadow: 0 3px 6px rgba(0,0,0,0.3);
+        }
+        
+        .comparison {
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+            margin: 30px 0;
+        }
+        
+        .comparison h4 {
+            font-size: 1.6em;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        .vs-grid {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 25px;
+            align-items: center;
+        }
+        
+        .vs-item {
+            text-align: center;
+            padding: 25px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+        }
+        
+        .vs-item h5 {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+        
+        .vs-item .price {
+            font-size: 1.8em;
+            font-weight: 700;
+        }
+        
+        .vs-separator {
+            font-size: 2em;
+            font-weight: 700;
+        }
+        
+        .vs-savings {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.3em;
+            font-weight: 700;
+        }
+        
+        .vs-savings span {
+            color: #fbbf24;
+        }
+        
+        .testimonial {
+            background: #f3f4f6;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border-left: 5px solid #10b981;
+            font-style: italic;
+            font-size: 1.1em;
+        }
+        
+        .author {
+            margin-top: 15px;
+            font-weight: 600;
+            color: #374151;
+            font-style: normal;
+        }
+        
+        .cta-section {
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            color: white;
+            padding: 50px;
+            border-radius: 20px;
+            text-align: center;
+            margin-top: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: shimmer 3s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+        
+        .cta-section h4 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .cta-section p {
+            font-size: 1.3em;
+            margin-bottom: 30px;
+            opacity: 0.95;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .cta-btn {
+            background: white;
+            color: #dc2626;
+            padding: 20px 50px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.4em;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            position: relative;
+            z-index: 2;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .cta-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+        
+        .countdown {
+            background: #fbbf24;
+            color: #92400e;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 25px;
+            font-weight: 600;
+            animation: flash 2s infinite;
+            font-size: 1.1em;
+        }
+        
+        @keyframes flash {
+            0%, 50%, 100% { opacity: 1; }
+            25%, 75% { opacity: 0.7; }
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+        }
+        
+        .modal-content {
+            background: white;
+            margin: 10% auto;
+            padding: 40px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            animation: slideDown 0.5s ease;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        @keyframes slideDown {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .modal h3 {
+            color: #1e293b;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+        }
+        
+        .modal p {
+            color: #6b7280;
+            margin-bottom: 25px;
+            font-size: 1.1em;
+        }
+        
+        .modal input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 18px;
+            margin-bottom: 20px;
+            background: white;
+        }
+        
+        .modal input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .modal-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 5px;
+        }
+        
+        .modal-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+        
+        .modal-btn.secondary {
+            background: #f1f5f9;
+            color: #64748b;
+        }
+        
+        .modal-btn.secondary:hover {
+            background: #e2e8f0;
+            box-shadow: 0 5px 15px rgba(100, 116, 139, 0.2);
+        }
+        
+        .privacy-note {
+            font-size: 0.85em;
+            color: #94a3b8;
+            margin-top: 15px;
+        }
+        
+        .footer {
+            background: #1f2937;
+            color: #d1d5db;
+            padding: 30px;
+            text-align: center;
+            margin-top: 40px;
+        }
+        
+        .footer p {
+            margin: 5px 0;
+        }
+        
+        .footer a {
+            color: #fbbf24;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💰 Калькулятор экономии с ИИ</h1>
+            <p class="subtitle">Узнайте, сколько денег и времени сэкономит автоматизация в ВАШЕМ бизнесе!</p>
+        </div>
+        
+        <div class="content">
+            <div class="calculator-section">
+                <div class="input-panel">
+                    <h3>📊 Расскажите о своем бизнесе</h3>
+                    
+                    <div class="input-group">
+                        <label for="niche">🎯 Ваша ниша/место работы:</label>
+                        <select id="niche">
+                            <option value="25">💄 Салон красоты/косметология</option>
+                            <option value="30">🎨 Творческие услуги (дизайн, фото)</option>
+                            <option value="20">🏪 Интернет-магазин/производство</option>
+                            <option value="35">💼 Консультант/коуч/тренер</option>
+                            <option value="15">🏢 Работаю в офисе по найму</option>
+                            <option value="28">🏗 Строительство/ремонт</option>
+                            <option value="22">📚 Образование/репетиторство</option>
+                            <option value="25">⚖️ Юридические услуги</option>
+                            <option value="30">🍽 Ресторан/кафе/доставка</option>
+                            <option value="25">🚗 Автосервис/автомойка</option>
+                            <option value="32" selected>💻 IT/разработка/маркетинг</option>
+                            <option value="27">🏠 Недвижимость/риэлтор</option>
+                            <option value="24">💊 Медицина/стоматология</option>
+                            <option value="20">🧹 Клининг/уборка</option>
+                            <option value="26">🎪 Организация мероприятий</option>
+                        </select>
+                        <small>Мы автоматически рассчитаем время на рутину для вашей сферы</small>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="revenue">💰 Ваша месячная выручка (₽):</label>
+                        <input type="number" id="revenue" value="300000" placeholder="Введите сумму">
+                        <small>Если работаете по найму - укажите зарплату</small>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="conversion">📈 Сколько продаж из 10 запросов получаете?</label>
+                        <select id="conversion">
+                            <option value="1">😢 1-2 продажи (очень мало)</option>
+                            <option value="3" selected>😐 3-4 продажи (средне)</option>
+                            <option value="5">😊 5-6 продаж (хорошо)</option>
+                            <option value="7">😎 7-8 продаж (отлично)</option>
+                            <option value="9">🔥 9-10 продаж (топ)</option>
+                        </select>
+                        <small>ИИ может увеличить конверсию на 20-30%</small>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="investment">💸 Готовы инвестировать в автоматизацию:</label>
+                        <select id="investment">
+                            <option value="7990">🥉 До 10 000₽ (МК + базовые инструменты)</option>
+                            <option value="49990" selected>🥈 До 50 000₽ (Полный курс + внедрение)</option>
+                            <option value="99990">🥇 До 100 000₽ (VIP + персональная настройка)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="auto-info">
+                        💡 <strong>Автоматически рассчитываем:</strong><br>
+                        • Ваша часовая ставка: <span id="autoHourlyRate">2500 ₽</span><br>
+                        • Часов рутины в неделю: <span id="autoRoutineHours">32 часа</span><br>
+                        • Потенциал роста конверсии: <span id="conversionGrowth">+30%</span>
+                    </div>
+                </div>
+                
+                <div class="results-panel">
+                    <h3>🚀 Ваши результаты с ИИ</h3>
+                    
+                    <div class="result-item">
+                        <div class="result-label">Ваша часовая ставка:</div>
+                        <div class="result-value" id="hourlyRateDisplay">0 ₽/час</div>
+                    </div>
+                    
+                    <div class="result-item">
+                        <div class="result-label">Время экономии в месяц:</div>
+                        <div class="result-value" id="savedHours">0 часов</div>
+                    </div>
+                    
+                    <div class="result-item">
+                        <div class="result-label">Стоимость сэкономленного времени:</div>
+                        <div class="result-value" id="savedMoney">0 ₽/мес</div>
+                    </div>
+                    
+                    <div class="result-item">
+                        <div class="result-label">Доп. доход от роста конверсии:</div>
+                        <div class="result-value" id="conversionIncome">0 ₽/мес</div>
+                    </div>
+                    
+                    <div class="result-item">
+                        <div class="result-label">Окупаемость вложений:</div>
+                        <div class="result-value" id="payback">0 мес</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="wow-effect" id="wowEffect">
+                <h4>🎉 ВАУ! Посмотрите на эту экономию!</h4>
+                <div class="big-number" id="yearSavings">0 ₽</div>
+                <p><strong>ЗА ГОД</strong> вы сэкономите столько денег! Это как получить дополнительную зарплату!</p>
+            </div>
+            
+            <div class="comparison">
+                <h4>🔄 ИИ vs Помощник (за год)</h4>
+                <div class="vs-grid">
+                    <div class="vs-item">
+                        <h5>🤖 ИИ-Автоматизация</h5>
+                        <div class="price" id="aiCost">0 ₽</div>
+                    </div>
+                    <div class="vs-separator">VS</div>
+                    <div class="vs-item">
+                        <h5>👤 Найм помощника</h5>
+                        <div class="price" id="humanCost">0 ₽</div>
+                    </div>
+                </div>
+                <div class="vs-savings">
+                    Экономия: <span id="totalSavings">0 ₽</span>
+                </div>
+            </div>
+            
+            <div class="testimonial">
+                <p>"За месяц мой ИИ-бот принес 16 продаж! Я сплю, а деньги идут. Это просто магия!"</p>
+                <div class="author">— Владелица магазина элитного парфюма</div>
+            </div>
+            
+            <div class="cta-section">
+                <h4>🚀 Создайте свою команду ИИ-помощников!</h4>
+                <p>На МК 4.0 за 4 дня получите систему, которая окупится за <span id="quickPayback">2-3</span> месяца</p>
+                <a href="https://omniclub.pro/mk4.0" target="_blank" class="cta-btn">
+                    🎯 Забронировать место со скидкой
+                </a>
+                <div class="countdown">
+                    ⏰ Старт уже скоро, осталось 3 места!
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>© 2025 NEURO-FORCE | Виктор Тимонин</p>
+            <p>Telegram: <a href="https://t.me/Viktor_Timonin" target="_blank">@Viktor_Timonin</a></p>
+        </div>
+    </div>
+    
+    <!-- Модальное окно для сбора email -->
+    <div id="emailModal" class="modal">
+        <div class="modal-content">
+            <h3>🎯 Получите персональный расчет!</h3>
+            <p>Оставьте email — отправим подробный PDF с расчетами и рекомендациями по автоматизации именно для вашей ниши</p>
+            
+            <input type="email" id="userEmail" placeholder="Ваш email" required>
+            
+            <div style="margin: 20px 0;">
+                <button class="modal-btn" onclick="saveEmailAndShowResults()">
+                    📊 Получить расчет
+                </button>
+                <button class="modal-btn secondary" onclick="skipEmailAndShowResults()">
+                    Пропустить
+                </button>
+            </div>
+            
+            <div class="privacy-note">
+                🔒 Не спамим. Отправим только ваш расчет и полезную информацию по ИИ-автоматизации
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let isFirstCalculation = true;
+        let emailCollected = true; // Отключаем модальное окно пока
+        let userEmail = '';
+        
+        function formatNumber(num) {
+            return new Intl.NumberFormat('ru-RU').format(Math.round(num));
+        }
+        
+        function showEmailModal() {
+            const modal = document.getElementById('emailModal');
+            if (modal) {
+                modal.style.display = 'block';
+            }
+        }
+        
+        function hideEmailModal() {
+            const modal = document.getElementById('emailModal');
+            if (modal) {
+                modal.style.display = 'none';
+            }
+        }
+        
+        function saveEmailAndShowResults() {
+            const email = document.getElementById('userEmail').value;
+            
+            if (!email || !email.includes('@')) {
+                alert('Пожалуйста, введите корректный email');
+                return;
+            }
+            
+            // Сохраняем email в переменную
+            userEmail = email;
+            emailCollected = true;
+            
+            // Отправляем данные в Google Sheets
+            if (window.calculatorData) {
+                sendToCRM(email, window.calculatorData);
+            }
+            
+            hideEmailModal();
+            showResultsWithAnimation();
+        }
+        
+        function skipEmailAndShowResults() {
+            emailCollected = true;
+            hideEmailModal();
+            showResultsWithAnimation();
+        }
+        
+        function showResultsWithAnimation() {
+            // Показываем результаты с анимацией
+            const resultsPanel = document.querySelector('.results-panel');
+            const wowEffect = document.getElementById('wowEffect');
+            const comparison = document.querySelector('.comparison');
+            
+            if (resultsPanel) {
+                resultsPanel.style.opacity = '0';
+                resultsPanel.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    resultsPanel.style.transition = 'all 0.8s ease';
+                    resultsPanel.style.opacity = '1';
+                    resultsPanel.style.transform = 'translateY(0)';
+                }, 100);
+            }
+            
+            if (wowEffect && wowEffect.style.display !== 'none') {
+                setTimeout(() => {
+                    wowEffect.style.animation = 'bounce 1s ease';
+                }, 500);
+            }
+            
+            if (comparison) {
+                setTimeout(() => {
+                    comparison.style.opacity = '0';
+                    comparison.style.transform = 'translateY(20px)';
+                    comparison.style.transition = 'all 0.8s ease';
+                    comparison.style.opacity = '1';
+                    comparison.style.transform = 'translateY(0)';
+                }, 800);
+            }
+        }
+        
+        // Функция для отправки данных в Google Sheets (пока отключена)
+        function sendToCRM(email, data) {
+            // Пока не настроено - функция просто возвращается
+            console.log('Данные для отправки:', { email, data });
+            return;
+            
+            /* РАСКОММЕНТИРУЙТЕ КОГДА НАСТРОИТЕ GOOGLE SHEETS:
+            const payload = {
+                email: email,
+                niche: document.getElementById('niche').options[document.getElementById('niche').selectedIndex].text,
+                revenue: document.getElementById('revenue').value,
+                conversion: document.getElementById('conversion').value,
+                investment: document.getElementById('investment').value,
+                yearSavings: data.yearSavings,
+                paybackMonths: data.paybackMonths,
+                timestamp: new Date().toISOString()
+            };
+            
+            const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/ВСТАВЬТЕ_СЮДА_ВАШ_URL/exec';
+            
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            */
+        }
+        
+        function calculate() {
+            const revenue = parseFloat(document.getElementById('revenue').value) || 0;
+            const nicheHours = parseFloat(document.getElementById('niche').value) || 25;
+            const conversionRate = parseFloat(document.getElementById('conversion').value) || 3;
+            const investment = parseFloat(document.getElementById('investment').value) || 0;
+            
+            // Показываем модальное окно только при первом расчете с заполненными данными
+            if (isFirstCalculation && revenue > 0 && !emailCollected) {
+                isFirstCalculation = false;
+                setTimeout(() => {
+                    showEmailModal();
+                }, 1000);
+                return;
+            }
+            
+            // Автоматические расчеты
+            const workingHoursPerMonth = 160;
+            const hourlyRate = revenue / workingHoursPerMonth;
+            const routineHours = nicheHours;
+            const monthlyRoutineHours = routineHours * 4.33;
+            
+            // Обновляем автоматические поля
+            const autoHourlyRateEl = document.getElementById('autoHourlyRate');
+            const autoRoutineHoursEl = document.getElementById('autoRoutineHours');
+            
+            if (autoHourlyRateEl) autoHourlyRateEl.textContent = formatNumber(hourlyRate) + ' ₽';
+            if (autoRoutineHoursEl) autoRoutineHoursEl.textContent = routineHours + ' часов';
+            
+            // Рост конверсии с ИИ
+            const maxConversion = 10;
+            const currentConversionPercent = (conversionRate / maxConversion) * 100;
+            let conversionGrowthPercent = 30;
+            
+            if (currentConversionPercent > 70) {
+                conversionGrowthPercent = 15;
+            } else if (currentConversionPercent > 50) {
+                conversionGrowthPercent = 20;
+            }
+            
+            const newConversionPercent = currentConversionPercent + conversionGrowthPercent;
+            if (newConversionPercent > 100) {
+                conversionGrowthPercent = 100 - currentConversionPercent;
+            }
+            
+            const conversionGrowthEl = document.getElementById('conversionGrowth');
+            if (conversionGrowthEl) conversionGrowthEl.textContent = '+' + conversionGrowthPercent + '%';
+            
+            // Расчеты экономии
+            const monthlySavedMoney = monthlyRoutineHours * hourlyRate;
+            const conversionIncome = revenue * (conversionGrowthPercent / 100);
+            const totalMonthlyBenefit = monthlySavedMoney + conversionIncome;
+            const aiMonthlyCost = 2500;
+            const netMonthlyBenefit = totalMonthlyBenefit - aiMonthlyCost;
+            const paybackMonths = investment / netMonthlyBenefit;
+            const yearSavings = (netMonthlyBenefit * 12) - investment;
+            
+            // Сравнение с помощником
+            const humanMonthlyCost = 50000;
+            const humanYearlyCost = humanMonthlyCost * 12 + 80000;
+            const aiYearlyCost = investment + (aiMonthlyCost * 12);
+            const totalSavingsVsHuman = humanYearlyCost - aiYearlyCost;
+            
+            // Сохраняем данные для отправки в CRM
+            window.calculatorData = {
+                revenue,
+                nicheHours,
+                conversionRate,
+                investment,
+                yearSavings,
+                paybackMonths,
+                totalSavingsVsHuman
+            };
+            
+            // Обновляем интерфейс
+            const elements = {
+                'hourlyRateDisplay': formatNumber(hourlyRate) + ' ₽/час',
+                'savedHours': formatNumber(monthlyRoutineHours) + ' часов',
+                'savedMoney': formatNumber(monthlySavedMoney) + ' ₽/мес',
+                'conversionIncome': formatNumber(conversionIncome) + ' ₽/мес',
+                'payback': Math.ceil(paybackMonths) + ' мес',
+                'aiCost': formatNumber(aiYearlyCost) + ' ₽',
+                'humanCost': formatNumber(humanYearlyCost) + ' ₽',
+                'totalSavings': formatNumber(totalSavingsVsHuman) + ' ₽'
+            };
+            
+            Object.keys(elements).forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.textContent = elements[id];
+                }
+            });
+            
+            // WOW-эффект
+            const wowElement = document.getElementById('wowEffect');
+            const yearSavingsElement = document.getElementById('yearSavings');
+            const quickPaybackElement = document.getElementById('quickPayback');
+            
+            if (yearSavings > 50000) {
+                if (wowElement) wowElement.style.display = 'block';
+                if (yearSavingsElement) yearSavingsElement.textContent = formatNumber(yearSavings) + ' ₽';
+                if (quickPaybackElement) quickPaybackElement.textContent = Math.ceil(paybackMonths);
+                
+                if (emailCollected && wowElement) {
+                    wowElement.style.animation = 'none';
+                    setTimeout(() => {
+                        wowElement.style.animation = 'bounce 1s ease';
+                    }, 100);
+                }
+            } else {
+                if (wowElement) wowElement.style.display = 'none';
+            }
+        }
+        
+        // Автоматический пересчет
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputs = document.querySelectorAll('input[type="number"]');
+            const selects = document.querySelectorAll('select');
+            
+            inputs.forEach((input) => {
+                input.addEventListener('input', calculate);
+                input.addEventListener('change', calculate);
+            });
+            
+            selects.forEach((select) => {
+                select.addEventListener('change', calculate);
+            });
+            
+            // Закрытие модального окна при клике вне его
+            window.addEventListener('click', function(event) {
+                const modal = document.getElementById('emailModal');
+                if (event.target === modal) {
+                    skipEmailAndShowResults();
+                }
+            });
+            
+            calculate();
+        });
+    </script>
+</body>
+</html>
